@@ -1,6 +1,6 @@
 "use client";
 
-import { isEmptyString } from "@/utils/helpers";
+import { toDueDateTimeString, toNullableString } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
@@ -15,11 +15,9 @@ export default function NewTaskForm() {
     console.log("handle submit");
     await fetch("/api/tasks", {
       body: JSON.stringify({
-        assignedTo,
+        assignedTo: toNullableString(assignedTo),
         description,
-        dueDateTime: isEmptyString(dueDateTime)
-          ? ""
-          : `${dueDateTime}T23:59:59.999`,
+        dueDateTime: toDueDateTimeString(dueDateTime),
       }),
       headers: {
         "Content-type": "application/json",

@@ -1,7 +1,11 @@
 "use client";
 
 import { EditTaskFormProps } from "@/types";
-import { isEmptyString, toDateString } from "@/utils/helpers";
+import {
+  toDateString,
+  toDueDateTimeString,
+  toNullableString,
+} from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "./Button";
@@ -26,11 +30,9 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
     console.log("handle submit");
     await fetch("/api/tasks", {
       body: JSON.stringify({
-        assignedTo,
+        assignedTo: toNullableString(assignedTo),
         description,
-        dueDateTime: isEmptyString(dueDateTime)
-          ? ""
-          : `${dueDateTime}T23:59:59.999`,
+        dueDateTime: toDueDateTimeString(dueDateTime),
         id,
       }),
       headers: {
