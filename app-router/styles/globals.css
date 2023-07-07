@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p, table {
+  @apply mb-4;
+}
+
+h1 {
+  @apply text-3xl mb-8;
+}
+
+h4 {
+  @apply text-lg;
+}
+
+a {
+  @apply text-blue-600 font-semibold;
+}
+
+table {
+  @apply min-w-full table-auto;
+  @apply border-collapse border-spacing-0;
+}
+
+thead, tbody {
+  @apply min-w-full;
+}
+
+th {
+  @apply p-2 border-b-2 border-b-gray-500;
+  @apply font-semibold text-left;
+}
+
+td {
+  @apply p-2 border-b border-b-gray-300;
+  @apply font-normal text-left;
+}
