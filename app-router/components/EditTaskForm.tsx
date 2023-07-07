@@ -26,10 +26,12 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
     console.log("handle submit");
     await fetch("/api/tasks", {
       body: JSON.stringify({
-        assignedTo: assignedTo,
-        description: description,
-        dueDateTime: isEmptyString(dueDateTime) ? "" : dueDateTime ? `${dueDateTime}T23:59:59.999` : "",
-        id: id
+        assignedTo,
+        description,
+        dueDateTime: isEmptyString(dueDateTime)
+          ? ""
+          : `${dueDateTime}T23:59:59.999`,
+        id,
       }),
       headers: {
         "Content-type": "application/json",
@@ -48,7 +50,7 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
           value={description}
           placeholder="Describe the work to be done..."
           rows={4}
-          onChange={e => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
           className="w-full rounded"
         />
       </div>
@@ -57,7 +59,7 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
         <input
           type="text"
           value={assignedTo}
-          onChange={e => setAssignedTo(e.target.value)}
+          onChange={(e) => setAssignedTo(e.target.value)}
           className="w-full rounded"
         />
       </div>

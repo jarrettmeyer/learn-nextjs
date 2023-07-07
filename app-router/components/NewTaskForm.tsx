@@ -1,5 +1,6 @@
 "use client";
 
+import { isEmptyString } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
@@ -13,7 +14,13 @@ export default function NewTaskForm() {
   async function handleSubmit() {
     console.log("handle submit");
     await fetch("/api/tasks", {
-      body: JSON.stringify({ assignedTo, description, dueDateTime }),
+      body: JSON.stringify({
+        assignedTo,
+        description,
+        dueDateTime: isEmptyString(dueDateTime)
+          ? ""
+          : `${dueDateTime}T23:59:59.999`,
+      }),
       headers: {
         "Content-type": "application/json",
       },
@@ -30,7 +37,7 @@ export default function NewTaskForm() {
           value={description}
           placeholder="Describe the work to be done..."
           rows={4}
-          onChange={e => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
           className="w-full rounded"
         />
       </div>
@@ -39,7 +46,7 @@ export default function NewTaskForm() {
         <input
           type="text"
           value={assignedTo}
-          onChange={e => setAssignedTo(e.target.value)}
+          onChange={(e) => setAssignedTo(e.target.value)}
           className="w-full rounded"
         />
       </div>
@@ -48,7 +55,7 @@ export default function NewTaskForm() {
         <input
           type="date"
           value={dueDateTime}
-          onChange={e => setDueDateTime(e.target.value)}
+          onChange={(e) => setDueDateTime(e.target.value)}
           className="w-full rounded"
         />
       </div>
