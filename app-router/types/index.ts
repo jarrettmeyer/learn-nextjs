@@ -18,6 +18,10 @@ export interface DeleteTaskButtonProps {
   id: number;
 }
 
+export interface EditTaskFormProps {
+  id: number;
+}
+
 export interface LinkButtonProps {
   children: ReactNode;
   className?: string;

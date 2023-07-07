@@ -41,7 +41,7 @@ export async function getTaskById(id: number): Promise<Task> {
 export async function getTasks(): Promise<Task[]> {
   const db = new DatabaseAdapter();
   try {
-    const sql = `select * from ${tasksTable}`;
+    const sql = `select * from ${tasksTable} order by "modifiedDateTime" desc`;
     const tasks = await db.query<Task>(sql);
     console.log(`get tasks found ${tasks.length} tasks`);
     return tasks;
@@ -64,7 +64,7 @@ export async function insertTask(body: CreateTaskForm): Promise<void> {
 export async function updateTask(body: UpdateTaskForm): Promise<void> {
   const db = new DatabaseAdapter();
   try {
-    const sql = `update ${tasksTable} set "description" = $2, "assignedTo" = $3, "dueDateTime" = $4, "modifiedDateTime" = NOW() where "id" = $4 and "completedDateTime" is null`;
+    const sql = `update ${tasksTable} set "description" = $2, "assignedTo" = $3, "dueDateTime" = $4, "modifiedDateTime" = NOW() where "id" = $1 and "completedDateTime" is null`;
     const values = [
       body.id,
       body.description,
