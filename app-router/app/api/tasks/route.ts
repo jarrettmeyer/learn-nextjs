@@ -1,5 +1,5 @@
 import { UpdateTaskForm } from "@/types";
-import { deleteTask, getTaskById, getTasks, insertTask, updateTask } from "@/utils/queries";
+import { completeTask, deleteTask, getTaskById, getTasks, insertTask, updateTask } from "@/utils/queries";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
@@ -25,6 +25,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 }
 
 export async function PUT(request: NextRequest): Promise<NextResponse> {
+  const action = request.nextUrl.searchParams.get("action");
+  const id = +(request.nextUrl.searchParams.get("id") || -1);
+
+  if (action === "complete" && id > 0) {
+    await completeTask(id);
+    return NextResponse.json({});
+  }
+
   const body = (await request.json()) as UpdateTaskForm;
   await updateTask(body);
   return NextResponse.json({});

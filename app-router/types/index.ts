@@ -8,6 +8,11 @@ export interface ButtonProps {
   type?: "button" | "submit";
 }
 
+export interface CompleteTaskButtonProps {
+  className?: string;
+  id: number;
+}
+
 export interface CreateTaskForm {
   assignedTo?: string;
   description: string;
