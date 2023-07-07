@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 function isPublicRoute(pathname: string) {
-  const publicRoutes = [
-    /^\/$/,
-    /^\/_next\/static\/.*/,
-    /^\/favicon\.ico$/,
-    /^\/icons\/.*/,
-  ];
+  const publicRoutes = [/^\/$/, /^\/_next\/static\/.*/, /^\/favicon\.ico$/, /^\/icons\/.*/];
 
   return publicRoutes.some((rt) => rt.test(pathname));
 }

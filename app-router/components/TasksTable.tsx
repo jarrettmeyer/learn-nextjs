@@ -9,11 +9,11 @@ import PencilSquareIcon from "./images/PencilSquareIcon";
 
 export const revalidate = 0;
 
-function TaskCell({ completed, value }: { completed: boolean, value: string | null | undefined }) {
+function TaskCell({ completed, value }: { completed: boolean; value: string | null | undefined }) {
   if (completed) {
-    return <td className="line-through text-gray-400">{value}</td>
+    return <td className="line-through text-gray-400">{value}</td>;
   }
-  return <td className="text-gray-800">{value}</td>
+  return <td className="text-gray-800">{value}</td>;
 }
 
 function TaskRow({ task }: { task: Task }) {
@@ -21,10 +21,14 @@ function TaskRow({ task }: { task: Task }) {
   return (
     <tr key={task.id}>
       <td>
-        <Link href={`/tasks/${task.id}`}><EyeIcon /></Link>
+        <Link href={`/tasks/${task.id}`}>
+          <EyeIcon />
+        </Link>
       </td>
       <td>
-        <Link href={`/tasks/${task.id}/edit`}><PencilSquareIcon /></Link>
+        <Link href={`/tasks/${task.id}/edit`}>
+          <PencilSquareIcon />
+        </Link>
       </td>
       <TaskCell completed={completed} value={task.description} />
       <TaskCell completed={completed} value={task.assignedTo} />
@@ -32,7 +36,7 @@ function TaskRow({ task }: { task: Task }) {
       <TaskCell completed={completed} value={toDateString(task.completedDateTime)} />
       <TaskCell completed={completed} value={toDateString(task.modifiedDateTime)} />
     </tr>
-  )
+  );
 }
 
 export default function TasksTable() {
@@ -41,7 +45,7 @@ export default function TasksTable() {
   useEffect(() => {
     fetch("/api/tasks", {
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
       },
       method: "GET",
     })
@@ -62,9 +66,7 @@ export default function TasksTable() {
           <th>Modified</th>
         </tr>
       </thead>
-      <tbody>
-        {tasks.map((task) => TaskRow({ task }))}
-      </tbody>
+      <tbody>{tasks.map((task) => TaskRow({ task }))}</tbody>
     </table>
-  )
+  );
 }

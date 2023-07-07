@@ -13,16 +13,26 @@ export default function Layout({ children }: PropsWithChildren) {
           <nav className="container mx-auto py-4 flex flex-row gap-6 justify-stretch items-center">
             <h1 className="block text-xl font-semibold mb-0">Learn NextJS &mdash; App Router</h1>
             <div className="flex-grow flex flex-row gap-2">
-              <div><Link href="/" className="text-white">Home</Link></div>
-              <div><Link href="/tasks" className="text-white">Tasks</Link></div>
+              <div>
+                <Link href="/" className="text-white">
+                  Home
+                </Link>
+              </div>
+              <div>
+                <Link href="/tasks" className="text-white">
+                  Tasks
+                </Link>
+              </div>
             </div>
-            <div><Link href="/profile" className="text-white">Guest</Link></div>
+            <div>
+              <Link href="/profile" className="text-white">
+                Guest
+              </Link>
+            </div>
           </nav>
         </header>
         <main className="flex-grow py-8">
-          <div className="container mx-auto">
-            {children}
-          </div>
+          <div className="container mx-auto">{children}</div>
         </main>
         <footer className="bg-gray-200 shadow text-gray-700 text-sm">
           <div className="container mx-auto py-8">
@@ -31,5 +41,5 @@ export default function Layout({ children }: PropsWithChildren) {
         </footer>
       </body>
     </html>
-  )
+  );
 }

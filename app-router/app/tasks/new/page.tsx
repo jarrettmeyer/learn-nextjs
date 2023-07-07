@@ -6,5 +6,5 @@ export default function Page() {
       <h1>Create New Task</h1>
       <NewTaskForm />
     </div>
-  )
+  );
 }

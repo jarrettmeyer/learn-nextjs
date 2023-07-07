@@ -8,9 +8,11 @@ export default async function Page() {
     <div>
       <h1 className="mb-4">Tasks</h1>
       <p className="text-right">
-        <LinkButton href="/tasks/new" className="bg-green-600 hover:bg-green-500">Create New Task</LinkButton>
+        <LinkButton href="/tasks/new" className="bg-green-600 hover:bg-green-500">
+          Create New Task
+        </LinkButton>
       </p>
       <TasksTable />
     </div>
-  )
+  );
 }

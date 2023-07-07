@@ -1,17 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.tsx",
-    "./components/**/*.tsx",
-  ],
+  content: ["./app/**/*.tsx", "./components/**/*.tsx"],
   theme: {
     extend: {
-      backgroundImage: {
-
-      },
+      backgroundImage: {},
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-  ],
-}
+  plugins: [require("@tailwindcss/forms")],
+};

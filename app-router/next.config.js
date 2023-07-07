@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-  },
+  experimental: {},
   reactStrictMode: true,
   output: "standalone",
 };

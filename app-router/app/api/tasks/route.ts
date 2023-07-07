@@ -1,11 +1,5 @@
 import { UpdateTaskForm } from "@/types";
-import {
-  deleteTask,
-  getTaskById,
-  getTasks,
-  insertTask,
-  updateTask,
-} from "@/utils/queries";
+import { deleteTask, getTaskById, getTasks, insertTask, updateTask } from "@/utils/queries";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(request: NextRequest): Promise<NextResponse> {

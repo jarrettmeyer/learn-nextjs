@@ -19,9 +19,7 @@ export function toDateString(value: Date | string | null | undefined): string {
   return `${year}-${month}-${day}`;
 }
 
-export function toDueDateTimeString(
-  value: string | null | undefined,
-): string | null {
+export function toDueDateTimeString(value: string | null | undefined): string | null {
   if (value === null || value === undefined) {
     return null;
   }
@@ -39,9 +37,7 @@ export function toDueDateTimeString(
   return `${year}-${month}-${day}T23:59:59.999`;
 }
 
-export function toNullableString(
-  value: string | null | undefined,
-): string | null {
+export function toNullableString(value: string | null | undefined): string | null {
   if (isEmptyString(value)) {
     return null;
   }

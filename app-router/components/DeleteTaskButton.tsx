@@ -25,5 +25,9 @@ export default function DeleteTaskButton({ id }: DeleteTaskButtonProps) {
     return router.push("/tasks");
   }
 
-  return <Button onClick={handleClick} className="bg-red-600 hover:bg-red-400">Delete Task</Button>
+  return (
+    <Button onClick={handleClick} className="bg-red-600 hover:bg-red-400">
+      Delete Task
+    </Button>
+  );
 }

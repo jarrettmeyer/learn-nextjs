@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-p, table {
+p,
+table {
   @apply mb-4;
 }
 
@@ -23,7 +24,8 @@ table {
   @apply border-collapse border-spacing-0;
 }
 
-thead, tbody {
+thead,
+tbody {
   @apply min-w-full;
 }
 

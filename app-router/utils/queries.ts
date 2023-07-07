@@ -1,7 +1,6 @@
 import { CreateTaskForm, Task, UpdateTaskForm } from "@/types";
 import { DatabaseAdapter } from "@/utils/database";
 
-const tasksPath = "/tasks";
 const tasksTable = `"public"."tasks"`;
 
 export async function completeTask(id: number): Promise<void> {
@@ -65,12 +64,7 @@ export async function updateTask(body: UpdateTaskForm): Promise<void> {
   const db = new DatabaseAdapter();
   try {
     const sql = `update ${tasksTable} set "description" = $2, "assignedTo" = $3, "dueDateTime" = $4, "modifiedDateTime" = NOW() where "id" = $1 and "completedDateTime" is null`;
-    const values = [
-      body.id,
-      body.description,
-      body.assignedTo,
-      body.dueDateTime,
-    ];
+    const values = [body.id, body.description, body.assignedTo, body.dueDateTime];
     await db.query(sql, values);
   } finally {
     await db.disconnect();
