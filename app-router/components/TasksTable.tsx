@@ -1,7 +1,7 @@
 "use client";
 
-import { Task } from "@/types";
 import { toDateString } from "@/utils/client/helpers";
+import { Task } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import EyeIcon from "./images/EyeIcon";
@@ -9,14 +9,23 @@ import PencilSquareIcon from "./images/PencilSquareIcon";
 
 export const revalidate = 0;
 
-function TaskCell({ completed, value }: { completed: boolean; value: string | null | undefined }) {
+interface TaskCellProps {
+  completed: boolean;
+  value: string | null | undefined;
+}
+
+interface TaskRowProps {
+  task: Task;
+}
+
+function TaskCell({ completed, value }: TaskCellProps) {
   if (completed) {
     return <td className="line-through text-gray-400">{value}</td>;
   }
   return <td className="text-gray-800">{value}</td>;
 }
 
-function TaskRow({ task }: { task: Task }) {
+function TaskRow({ task }: TaskRowProps) {
   const completed = !!task.completedDateTime;
   return (
     <tr key={task.id}>

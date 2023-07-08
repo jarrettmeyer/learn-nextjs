@@ -1,4 +1,12 @@
-import { ButtonProps } from "@/types";
+import { MouseEventHandler, ReactNode } from "react";
+
+export interface ButtonProps {
+  children?: ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: "button" | "submit";
+}
 
 export default function Button({ children, className, disabled, onClick, type }: ButtonProps) {
   return (

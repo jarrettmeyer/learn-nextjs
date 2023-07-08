@@ -1,9 +1,12 @@
 "use client";
 
-import { DeleteTaskButtonProps } from "@/types";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
+
+export interface DeleteTaskButtonProps {
+  id: number;
+}
 
 export default function DeleteTaskButton({ id }: DeleteTaskButtonProps) {
   const router = useRouter();

@@ -1,5 +1,11 @@
-import { LinkButtonProps } from "@/types";
 import Link from "next/link";
+import { ReactNode } from "react";
+
+export interface LinkButtonProps {
+  children: ReactNode;
+  className?: string;
+  href: string;
+}
 
 export default function LinkButton({ children, className, href }: LinkButtonProps) {
   return (

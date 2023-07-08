@@ -1,9 +1,13 @@
 "use client";
 
-import { CompleteTaskButtonProps } from "@/types";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
+
+export interface CompleteTaskButtonProps {
+  className?: string;
+  id: number;
+}
 
 export default function CompleteTaskButton({ className, id }: CompleteTaskButtonProps) {
   const router = useRouter();

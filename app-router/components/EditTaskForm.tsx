@@ -1,10 +1,13 @@
 "use client";
 
-import { EditTaskFormProps } from "@/types";
 import { toDateString } from "@/utils/client/helpers";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "./Button";
+
+export interface EditTaskFormProps {
+  id: number;
+}
 
 export default function EditTaskForm({ id }: EditTaskFormProps) {
   const [description, setDescription] = useState("");
