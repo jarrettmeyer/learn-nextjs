@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id                Int       @id @default(autoincrement())
+  description       String    @db.Text
+  assignedTo        String?   @db.VarChar(200)
+  dueDateTime       DateTime? @db.Timestamptz()
+  completedDateTime DateTime? @db.Timestamptz()
+  createdDateTime   DateTime  @db.Timestamptz()
+  modifiedDateTime  DateTime  @db.Timestamptz()
+
+  @@map("task")
+}

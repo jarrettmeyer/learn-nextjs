@@ -8,16 +8,13 @@ import Button from "./Button";
 export default function CompleteTaskButton({ className, id }: CompleteTaskButtonProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   async function handleClick() {
-    setIsDeleting(true);
-    await fetch(`/api/tasks?action=complete&id=${id}`, {
-      body: JSON.stringify({ id }),
-      headers: {
-        "Content-type": "application/json",
-      },
-      method: "PUT",
+    setIsUpdating(true);
+    await fetch(`/api/db`, {
+      body: JSON.stringify({ action: "completeTask", id }),
+      method: "POST",
     });
     if (pathname === "/tasks") {
       return router.refresh();
@@ -26,7 +23,7 @@ export default function CompleteTaskButton({ className, id }: CompleteTaskButton
   }
 
   return (
-    <Button onClick={handleClick} className={`bg-green-600 hover:bg-green-500 ${className}`}>
+    <Button onClick={handleClick} className={`bg-green-600 hover:bg-green-500 ${className}`} disabled={isUpdating}>
       Complete Task
     </Button>
   );

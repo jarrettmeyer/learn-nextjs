@@ -1,7 +1,7 @@
 "use client";
 
 import { Task } from "@/types";
-import { toDateString } from "@/utils/helpers";
+import { toDateString } from "@/utils/client/helpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import EyeIcon from "./images/EyeIcon";
@@ -43,14 +43,12 @@ export default function TasksTable() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    fetch("/api/tasks", {
-      headers: {
-        Accept: "application/json",
-      },
-      method: "GET",
+    fetch("/api/db", {
+      body: JSON.stringify({ action: "findAllTasks" }),
+      method: "POST",
     })
       .then((response) => response.json())
-      .then((tasks) => setTasks(tasks));
+      .then((body) => setTasks(body.tasks || []));
   }, []);
 
   return (

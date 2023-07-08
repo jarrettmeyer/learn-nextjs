@@ -12,12 +12,9 @@ export default function DeleteTaskButton({ id }: DeleteTaskButtonProps) {
 
   async function handleClick() {
     setIsDeleting(true);
-    await fetch("/api/tasks", {
-      body: JSON.stringify({ id }),
-      headers: {
-        "Content-type": "application/json",
-      },
-      method: "DELETE",
+    await fetch("/api/db", {
+      body: JSON.stringify({ action: "deleteTask", id }),
+      method: "POST",
     });
     if (pathname === "/tasks") {
       return router.refresh();
@@ -26,7 +23,7 @@ export default function DeleteTaskButton({ id }: DeleteTaskButtonProps) {
   }
 
   return (
-    <Button onClick={handleClick} className="bg-red-600 hover:bg-red-400">
+    <Button onClick={handleClick} className="bg-red-600 hover:bg-red-400" disabled={isDeleting}>
       Delete Task
     </Button>
   );

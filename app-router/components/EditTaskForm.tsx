@@ -1,7 +1,7 @@
 "use client";
 
 import { EditTaskFormProps } from "@/types";
-import { toDateString, toDueDateTimeString, toNullableString } from "@/utils/helpers";
+import { toDateString } from "@/utils/client/helpers";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "./Button";
@@ -13,29 +13,28 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/tasks?id=${id}`, { method: "GET" })
+    fetch(`/api/db`, {
+      body: JSON.stringify({ action: "findTaskById", id: id }),
+      method: "POST",
+    })
       .then((response) => response.json())
       .then((json) => {
-        setDescription(json.description || "");
-        setAssignedTo(json.assignedTo || "");
-        setDueDateTime(toDateString(json.dueDateTime || ""));
+        setDescription(json.task.description || "");
+        setAssignedTo(json.task.assignedTo || "");
+        setDueDateTime(toDateString(json.task.dueDateTime) || "");
       });
   }, [id]);
 
   async function handleSubmit() {
-    console.log("handle submit");
-    await fetch("/api/tasks", {
-      body: JSON.stringify({
-        assignedTo: toNullableString(assignedTo),
-        description,
-        dueDateTime: toDueDateTimeString(dueDateTime),
-        id,
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
-      method: "PUT",
-    });
+    const body = {
+      action: "updateTask",
+      assignedTo,
+      description,
+      dueDateTime,
+      id,
+    };
+    console.log("handle submit:", body);
+    await fetch("/api/db", { body: JSON.stringify(body), method: "POST" });
     router.push("/tasks");
   }
 

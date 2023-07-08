@@ -1,6 +1,5 @@
 "use client";
 
-import { toDueDateTimeString, toNullableString } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
@@ -12,16 +11,8 @@ export default function NewTaskForm() {
   const router = useRouter();
 
   async function handleSubmit() {
-    console.log("handle submit");
-    await fetch("/api/tasks", {
-      body: JSON.stringify({
-        assignedTo: toNullableString(assignedTo),
-        description,
-        dueDateTime: toDueDateTimeString(dueDateTime),
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
+    await fetch("/api/db", {
+      body: JSON.stringify({ action: "createTask", assignedTo, description, dueDateTime }),
       method: "POST",
     });
     router.push("/tasks");
