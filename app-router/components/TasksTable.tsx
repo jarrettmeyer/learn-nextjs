@@ -4,7 +4,7 @@ import { fetchApiDbData } from "@/utils/client/fetch";
 import { toDateString } from "@/utils/client/helpers";
 import { Task } from "@prisma/client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import EyeIcon from "./images/EyeIcon";
 import PencilSquareIcon from "./images/PencilSquareIcon";
 
@@ -51,14 +51,11 @@ function TaskRow({ task }: TaskRowProps) {
 
 export default function TasksTable() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const didFetch = useRef(false);
 
   useEffect(() => {
-    if (!didFetch.current) {
-      fetchApiDbData<Task[]>("findAllTasks").then((data) => {
-        setTasks(data);
-      });
-    }
+    fetchApiDbData<Task[]>("findAllTasks").then((data) => {
+      setTasks(data);
+    });
   }, []);
 
   return (
