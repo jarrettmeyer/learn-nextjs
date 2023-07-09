@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchApiDbData } from "@/utils/client/fetch";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
@@ -16,10 +17,8 @@ export default function CompleteTaskButton({ className, id }: CompleteTaskButton
 
   async function handleClick() {
     setIsUpdating(true);
-    await fetch(`/api/db`, {
-      body: JSON.stringify({ action: "completeTask", id }),
-      method: "POST",
-    });
+    const body = { action: "completeTask", id: +id };
+    await fetchApiDbData(body);
     if (pathname === "/tasks") {
       return router.refresh();
     }

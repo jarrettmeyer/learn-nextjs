@@ -13,20 +13,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await completeTask(body);
         break;
       case "createTask":
-        responseBody = await createTask(body);
+        await createTask(body);
         break;
       case "deleteTask":
         await deleteTask(body);
         break;
       case "findAllTasks":
-        responseBody = {
-          tasks: await findAllTasks(),
-        };
+        responseBody = await findAllTasks();
         break;
       case "findTaskById":
-        responseBody = {
-          task: await findTaskById(body),
-        };
+        responseBody = await findTaskById(body);
         break;
       case "updateTask":
         await updateTask(body);

@@ -1,9 +1,10 @@
 "use client";
 
+import { fetchApiDbData } from "@/utils/client/fetch";
 import { toDateString } from "@/utils/client/helpers";
 import { Task } from "@prisma/client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EyeIcon from "./images/EyeIcon";
 import PencilSquareIcon from "./images/PencilSquareIcon";
 
@@ -50,14 +51,14 @@ function TaskRow({ task }: TaskRowProps) {
 
 export default function TasksTable() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const didFetch = useRef(false);
 
   useEffect(() => {
-    fetch("/api/db", {
-      body: JSON.stringify({ action: "findAllTasks" }),
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((body) => setTasks(body.tasks || []));
+    if (!didFetch.current) {
+      fetchApiDbData<Task[]>({ action: "findAllTasks" }).then((data) => {
+        setTasks(data);
+      });
+    }
   }, []);
 
   return (

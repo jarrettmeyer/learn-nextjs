@@ -1,6 +1,8 @@
 "use client";
 
+import { fetchApiDbData } from "@/utils/client/fetch";
 import { toDateString } from "@/utils/client/helpers";
+import { Task } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "./Button";
@@ -16,16 +18,11 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/db`, {
-      body: JSON.stringify({ action: "findTaskById", id: id }),
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        setDescription(json.task.description || "");
-        setAssignedTo(json.task.assignedTo || "");
-        setDueDateTime(toDateString(json.task.dueDateTime) || "");
-      });
+    fetchApiDbData<Task>({ action: "findTaskById", id: +id }).then((data) => {
+      setDescription(data.description);
+      setAssignedTo(data.assignedTo || "");
+      setDueDateTime(toDateString(data.dueDateTime) || "");
+    });
   }, [id]);
 
   async function handleSubmit() {
@@ -37,8 +34,8 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
       id,
     };
     console.log("handle submit:", body);
-    await fetch("/api/db", { body: JSON.stringify(body), method: "POST" });
-    router.push("/tasks");
+    await fetchApiDbData(body);
+    router.push(`/tasks/${id}`);
   }
 
   return (

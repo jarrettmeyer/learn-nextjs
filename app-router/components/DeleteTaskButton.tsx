@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchApiDbData } from "@/utils/client/fetch";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
@@ -15,10 +16,8 @@ export default function DeleteTaskButton({ id }: DeleteTaskButtonProps) {
 
   async function handleClick() {
     setIsDeleting(true);
-    await fetch("/api/db", {
-      body: JSON.stringify({ action: "deleteTask", id }),
-      method: "POST",
-    });
+    const body = { action: "deleteTask", id: +id };
+    await fetchApiDbData(body);
     if (pathname === "/tasks") {
       return router.refresh();
     }

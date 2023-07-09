@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchApiDbData } from "@/utils/client/fetch";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
@@ -11,10 +12,8 @@ export default function NewTaskForm() {
   const router = useRouter();
 
   async function handleSubmit() {
-    await fetch("/api/db", {
-      body: JSON.stringify({ action: "createTask", assignedTo, description, dueDateTime }),
-      method: "POST",
-    });
+    const body = { action: "createTask", assignedTo, description, dueDateTime };
+    await fetchApiDbData(body);
     router.push("/tasks");
   }
 
