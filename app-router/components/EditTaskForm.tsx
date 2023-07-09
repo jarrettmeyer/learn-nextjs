@@ -4,73 +4,69 @@ import { fetchApiDbData } from "@/utils/client/fetch";
 import { toDateString } from "@/utils/client/helpers";
 import { Task } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "./Button";
+import LinkButton from "./LinkButton";
 
 export interface EditTaskFormProps {
   id: number;
 }
 
+interface EditTaskFormInputs {
+  assignedTo: string;
+  description: string;
+  dueDateTime: string;
+  id: number;
+}
+
 export default function EditTaskForm({ id }: EditTaskFormProps) {
-  const [description, setDescription] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
-  const [dueDateTime, setDueDateTime] = useState("");
+  const { handleSubmit, register, reset } = useForm<EditTaskFormInputs>({
+    defaultValues: {
+      id: +id,
+    },
+  });
   const router = useRouter();
 
   useEffect(() => {
     const body = { id: +id };
     fetchApiDbData<Task>("findTaskById", body).then((data) => {
-      setDescription(data.description);
-      setAssignedTo(data.assignedTo || "");
-      setDueDateTime(toDateString(data.dueDateTime) || "");
+      reset({
+        assignedTo: data.assignedTo || "",
+        description: data.description || "",
+        dueDateTime: toDateString(data.dueDateTime) || "",
+      });
     });
-  }, [id]);
+  }, [id, reset]);
 
-  async function handleSubmit() {
-    const body = {
-      assignedTo,
-      description,
-      dueDateTime,
-      id,
-    };
-    console.log("handle submit:", body);
-    await fetchApiDbData("updateTask", body);
-    router.push(`/tasks/${id}`);
-  }
+  const onSubmit: SubmitHandler<EditTaskFormInputs> = (data) => {
+    data.id = +data.id;
+    console.log("onSubmit:", data);
+    fetchApiDbData("updateTask", data).then(() => {
+      router.push(`/tasks/${id}`);
+    });
+  };
 
   return (
-    <form className="block">
-      <input type="hidden" name="id" value={id} />
+    <form onSubmit={handleSubmit(onSubmit)} className="block">
+      <input {...register("id")} type="hidden" />
       <div className="mb-6">
         <label className="block font-semibold">Description</label>
-        <textarea
-          value={description}
-          placeholder="Describe the work to be done..."
-          rows={4}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full rounded"
-        />
+        <textarea {...register("description")} className="w-full h-20 rounded" />
       </div>
       <div className="mb-6">
         <label className="block font-semibold">Assigned to</label>
-        <input
-          type="text"
-          value={assignedTo}
-          onChange={(e) => setAssignedTo(e.target.value)}
-          className="w-full rounded"
-        />
+        <input {...register("assignedTo")} type="text" className="w-full rounded" />
       </div>
       <div className="mb-6">
         <label className="block font-semibold">Due</label>
-        <input
-          type="date"
-          value={dueDateTime}
-          onChange={(e) => setDueDateTime(e.target.value)}
-          className="w-full rounded"
-        />
+        <input {...register("dueDateTime")} type="date" className="w-full rounded" />
       </div>
       <div className="mb-6">
-        <Button onClick={handleSubmit}>Submit</Button>
+        <LinkButton href={`/tasks/${id}`} className="bg-red-600 hover:bg-red-400 mr-8">
+          Cancel
+        </LinkButton>
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   );

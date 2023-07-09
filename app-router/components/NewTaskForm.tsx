@@ -2,53 +2,46 @@
 
 import { fetchApiDbData } from "@/utils/client/fetch";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "./Button";
+import LinkButton from "./LinkButton";
+
+interface NewTaskFormInputs {
+  assignedTo: string;
+  description: string;
+  dueDateTime: string;
+}
 
 export default function NewTaskForm() {
-  const [description, setDescription] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
-  const [dueDateTime, setDueDateTime] = useState("");
+  const { handleSubmit, register } = useForm<NewTaskFormInputs>();
   const router = useRouter();
 
-  async function handleSubmit() {
-    const body = { assignedTo, description, dueDateTime };
-    await fetchApiDbData("createTask", body);
-    router.push("/tasks");
-  }
+  const onSubmit: SubmitHandler<NewTaskFormInputs> = (data) => {
+    console.log("onSubmit:", data);
+    fetchApiDbData("createTask", data).then(() => {
+      router.push(`/tasks`);
+    });
+  };
 
   return (
-    <form className="block">
+    <form onSubmit={handleSubmit(onSubmit)} className="block">
       <div className="mb-6">
         <label className="block font-semibold">Description</label>
-        <textarea
-          value={description}
-          placeholder="Describe the work to be done..."
-          rows={4}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full rounded"
-        />
+        <textarea {...register("description")} className="w-full h-20 rounded" />
       </div>
       <div className="mb-6">
         <label className="block font-semibold">Assigned to</label>
-        <input
-          type="text"
-          value={assignedTo}
-          onChange={(e) => setAssignedTo(e.target.value)}
-          className="w-full rounded"
-        />
+        <input {...register("assignedTo")} type="text" className="w-full rounded" />
       </div>
       <div className="mb-6">
         <label className="block font-semibold">Due</label>
-        <input
-          type="date"
-          value={dueDateTime}
-          onChange={(e) => setDueDateTime(e.target.value)}
-          className="w-full rounded"
-        />
+        <input {...register("dueDateTime")} type="date" className="w-full rounded" />
       </div>
       <div className="mb-6">
-        <Button onClick={handleSubmit}>Submit</Button>
+        <LinkButton href={`/tasks`} className="bg-red-600 hover:bg-red-400 mr-8">
+          Cancel
+        </LinkButton>
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   );
