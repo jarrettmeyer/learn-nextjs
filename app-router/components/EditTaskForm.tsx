@@ -18,7 +18,8 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
   const router = useRouter();
 
   useEffect(() => {
-    fetchApiDbData<Task>({ action: "findTaskById", id: +id }).then((data) => {
+    const body = { id: +id };
+    fetchApiDbData<Task>("findTaskById", body).then((data) => {
       setDescription(data.description);
       setAssignedTo(data.assignedTo || "");
       setDueDateTime(toDateString(data.dueDateTime) || "");
@@ -27,14 +28,13 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
 
   async function handleSubmit() {
     const body = {
-      action: "updateTask",
       assignedTo,
       description,
       dueDateTime,
       id,
     };
     console.log("handle submit:", body);
-    await fetchApiDbData(body);
+    await fetchApiDbData("updateTask", body);
     router.push(`/tasks/${id}`);
   }
 

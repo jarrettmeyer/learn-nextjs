@@ -16,8 +16,8 @@ export default function DeleteTaskButton({ id }: DeleteTaskButtonProps) {
 
   async function handleClick() {
     setIsDeleting(true);
-    const body = { action: "deleteTask", id: +id };
-    await fetchApiDbData(body);
+    const body = { id: +id };
+    await fetchApiDbData("deleteTask", body);
     if (pathname === "/tasks") {
       return router.refresh();
     }

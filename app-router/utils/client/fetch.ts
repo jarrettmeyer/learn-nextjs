@@ -1,9 +1,12 @@
-export async function fetchApiDbData<TResponse = unknown, TRequest = unknown>(request: TRequest): Promise<TResponse> {
-  const url = "/api/db";
-  const body = JSON.stringify(request);
+export async function fetchApiDbData<TResponse = unknown, TRequest = unknown>(
+  action: string,
+  request?: TRequest,
+): Promise<TResponse> {
+  const url = `/api/db?action=${action}`;
+  const body = JSON.stringify(request || null);
   const method = "POST";
   const init: RequestInit = { body, method };
-  const response = await fetch("/api/db", init);
+  const response = await fetch(url, init);
   if (response.ok) {
     const json = await response.json();
     return json;

@@ -2,13 +2,14 @@ import { completeTask, createTask, deleteTask, findAllTasks, findTaskById, updat
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  const action = request.nextUrl.searchParams.get("action");
   const body = await request.json();
-  console.log("POST /api/db", { body });
+  console.log("POST /api/db", { action, body });
 
   try {
     let status = 200;
     let responseBody: any = {};
-    switch (body.action) {
+    switch (action) {
       case "completeTask":
         await completeTask(body);
         break;

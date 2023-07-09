@@ -55,7 +55,7 @@ export default function TasksTable() {
 
   useEffect(() => {
     if (!didFetch.current) {
-      fetchApiDbData<Task[]>({ action: "findAllTasks" }).then((data) => {
+      fetchApiDbData<Task[]>("findAllTasks").then((data) => {
         setTasks(data);
       });
     }

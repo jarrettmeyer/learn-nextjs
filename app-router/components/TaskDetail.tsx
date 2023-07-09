@@ -16,7 +16,7 @@ export default function TaskDetail({ id }: TaskDetailProps) {
   const [task, setTask] = useState<Task>({} as Task);
 
   useEffect(() => {
-    fetchApiDbData<Task>({ action: "findTaskById", id: +id }).then((data) => {
+    fetchApiDbData<Task>("findTaskById", { id: +id }).then((data) => {
       setTask(data);
     });
   }, [id]);

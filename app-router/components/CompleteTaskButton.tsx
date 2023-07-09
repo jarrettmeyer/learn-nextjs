@@ -17,8 +17,8 @@ export default function CompleteTaskButton({ className, id }: CompleteTaskButton
 
   async function handleClick() {
     setIsUpdating(true);
-    const body = { action: "completeTask", id: +id };
-    await fetchApiDbData(body);
+    const body = { id: +id };
+    await fetchApiDbData("completeTask", body);
     if (pathname === "/tasks") {
       return router.refresh();
     }

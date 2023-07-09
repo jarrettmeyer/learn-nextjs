@@ -12,8 +12,8 @@ export default function NewTaskForm() {
   const router = useRouter();
 
   async function handleSubmit() {
-    const body = { action: "createTask", assignedTo, description, dueDateTime };
-    await fetchApiDbData(body);
+    const body = { assignedTo, description, dueDateTime };
+    await fetchApiDbData("createTask", body);
     router.push("/tasks");
   }
 
