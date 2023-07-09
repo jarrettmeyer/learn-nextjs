@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import CompleteTaskButton from "./CompleteTaskButton";
 import DeleteTaskButton from "./DeleteTaskButton";
 import LinkButton from "./LinkButton";
+import PencilSquareIcon from "./images/PencilSquareIcon";
+import TableIcon from "./images/TableIcon";
 
 export interface TaskDetailProps {
   id: number;
@@ -23,9 +25,18 @@ export default function TaskDetail({ id }: TaskDetailProps) {
 
   return (
     <div>
-      <div className="mb-4">
+      <div className="flex flex-row justify-start items-start mb-4">
+        <LinkButton href="/tasks" className="mr-4">
+          <div className="flex flex-row justify-start items-center">
+            <TableIcon className="mr-2" />
+            <span>List Tasks</span>
+          </div>
+        </LinkButton>
         <LinkButton href={`/tasks/${id}/edit`} className="mr-4">
-          Edit Task
+          <div className="flex flex-row justify-start items-center">
+            <PencilSquareIcon className="mr-2" />
+            <span>Edit Task</span>
+          </div>
         </LinkButton>
         <CompleteTaskButton id={id} className="mr-12" />
         <DeleteTaskButton id={id} />
