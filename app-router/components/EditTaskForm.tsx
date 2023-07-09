@@ -21,7 +21,12 @@ interface EditTaskFormInputs {
 }
 
 export default function EditTaskForm({ id }: EditTaskFormProps) {
-  const { handleSubmit, register, reset } = useForm<EditTaskFormInputs>({
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<EditTaskFormInputs>({
     defaultValues: {
       id: +id,
     },
@@ -52,7 +57,8 @@ export default function EditTaskForm({ id }: EditTaskFormProps) {
       <input {...register("id")} type="hidden" />
       <div className="mb-6">
         <label className="block font-semibold">Description</label>
-        <textarea {...register("description")} className="w-full h-20 rounded" />
+        <textarea {...register("description", { required: true })} className="w-full h-20 rounded" />
+        {errors.description && <p className="text-sm text-red-600">Task description is required</p>}
       </div>
       <div className="mb-6">
         <label className="block font-semibold">Assigned to</label>
