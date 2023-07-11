@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import Footer from "@/components/Footer";
 import "@/styles/globals.css";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -37,11 +38,7 @@ export default function Layout({ children }: PropsWithChildren) {
         <main className="flex-grow py-8">
           <Container>{children}</Container>
         </main>
-        <footer className="bg-gray-200 shadow text-gray-700 text-sm">
-          <Container className="py-8">
-            <p className="mb-0">&copy; {new Date().getFullYear()}</p>
-          </Container>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
