@@ -5,7 +5,9 @@ import "@/styles/globals.css";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 
-export const metadata: Metadata = {};
+export const metadata: Metadata = {
+  title: "Learn NodeJS - App Router",
+};
 
 interface LayoutProps {
   children: ReactNode;

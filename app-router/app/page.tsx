@@ -1,3 +1,4 @@
+import TaskCount from "@/components/TaskCount";
 import Link from "next/link";
 
 export default function Page() {
@@ -5,8 +6,8 @@ export default function Page() {
     <div>
       <h1>Home</h1>
       <p>
-        This is the home page. There&apos;s nothing here. Perhaps you should check out the{" "}
-        <Link href="/tasks">tasks</Link>.
+        There are <TaskCount /> open <Link href="/tasks">tasks</Link>. Perhaps you would like to{" "}
+        <Link href="/tasks/new">create a new task</Link>.
       </p>
     </div>
   );

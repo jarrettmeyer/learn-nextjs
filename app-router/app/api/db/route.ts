@@ -1,4 +1,12 @@
-import { completeTask, createTask, deleteTask, findAllTasks, findTaskById, updateTask } from "@/utils/queries";
+import {
+  completeTask,
+  countOpenTasks,
+  createTask,
+  deleteTask,
+  findAllTasks,
+  findTaskById,
+  updateTask,
+} from "@/utils/queries";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -12,6 +20,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     switch (action) {
       case "completeTask":
         await completeTask(body);
+        break;
+      case "countOpenTasks":
+        responseBody = await countOpenTasks();
         break;
       case "createTask":
         await createTask(body);
